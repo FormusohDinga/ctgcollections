@@ -1,0 +1,29 @@
+{% extends parent_template|default:"catalog/base_catalog.html" %}
+
+{% block title %}
+{{ block.super }} - {{ startup.name }}
+{% endblock %}
+
+{% block content %}
+<article>
+
+<h2>{{ dvd.name }}</h2>
+  <ul>
+      <li>
+        <a href="{{ dvd.get_update_url }}">
+          Edit DVD</a></li>
+      <li>
+        <a href="{{ dvd.get_delete_url }}">
+          Delete DVD</a></li>
+  </ul>
+<dl>
+  <dt>Director</dt>
+    <dd>{{ dvd.director }}</dd>
+  <dt>Release Date</dt>
+    <dd>{{ dvd.release_date }}</dd>
+  <dt>Genre </dt>
+    <dd>{{ dvd.genere }}</dd>
+</dl>
+
+</article>
+{% endblock %}

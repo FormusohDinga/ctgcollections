@@ -1,0 +1,20 @@
+{% extends parent_template|default:"catalog/base_catalog.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<h2></h2>
+   <section>
+     <a href="{%url 'dvd_create'%}"> Add Movie
+     </a>
+     <h3>Movies</h3>
+     <ul>
+       {% for dvd in dvd_list %}
+         <li><a href="{{dvd.get_absolute_url}}">
+           {{ dvd.name }}
+         </a></li>
+       {% endfor %}
+     </ul>
+   </section>
+{% endblock %}
