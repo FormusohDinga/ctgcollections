@@ -18,12 +18,14 @@ from django.contrib import admin
 from django.conf.urls import include, url
 
 
-from catalog.views import homepage
+from catalog.views import DvdList
 
 from catalog import urls as catalog_urls
 
 urlpatterns = [
+    url(r'^$',
+        DvdList.as_view(),
+        name='catalog_dvd_urls'),
     url(r'^admin/', admin.site.urls),
-    url(r'^$', homepage),
     url(r'^catalog/', include(catalog_urls)),
 ]

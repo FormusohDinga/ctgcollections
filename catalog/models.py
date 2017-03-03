@@ -7,7 +7,7 @@ class Dvd(models.Model):
     director = models.CharField(max_length = 31)
     release_date = models.IntegerField()
     slug = models.SlugField()
-    genere = models.CharField(max_length=31)
+    genre = models.CharField(max_length=31)
 
     class Meta:
         unique_together = (('slug','name'),)
@@ -28,18 +28,25 @@ class Dvd(models.Model):
 class Book(models.Model):
     name = models.CharField(max_length = 31)
     author = models.CharField(max_length = 31)
-    release_date = models.DateField()
     slug = models.SlugField()
-    genere = models.CharField(max_length=31)
+    genre = models.CharField(max_length=31)
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('book_detail', kwargs={'slug':self.slug})
+    def get_update_url(self):
+        return reverse('book_update',
+                       kwargs={'slug': self.slug})
+    def get_delete_url(self):
+        return reverse('book_delete',
+                        kwargs={'slug': self.slug})
 
 class Music(models.Model):
     name = models.CharField(max_length = 31)
     artist = models.CharField(max_length = 31)
     release_date = models.DateField()
     slug = models.SlugField()
-    genere = models.CharField(max_length=31)
+    genre = models.CharField(max_length=31)
     def __str__(self):
         return self.name
 

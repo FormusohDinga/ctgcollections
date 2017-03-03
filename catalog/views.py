@@ -9,17 +9,48 @@ from django.core.urlresolvers import reverse_lazy
 
 # Create your views here.
 
-from .models import Dvd
-from .forms import DvdForm
+from .models import (Dvd, Book, Music, Actor)
+from .forms import DvdForm, BookForm
 from .utils import (ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin)
 
+class Catalog(View):
+    template_name = 'catalog/catalog.html'
+    context = {
+        'book_list': Book.objects.all(),
+        'dvd_list': Dvd.objects.all()
+    }
+    def get(self, request, parent_template=None):
+        return render(request, self.template_name, self.context)
 
-def homepage(request):
-    movies = Dvd.objects.all()
-    template = loader.get_template('catalog/catalog.html')
-    context = Context({'dvds':movies})
-    output = template.render(context)
-    return HttpResponse(output)
+def book_detail(request, slug):
+    book = get_object_or_404(
+        Book, slug__iexact=slug)
+    return render(
+        request,
+        'catalog/book_detail.html',
+        {'book': book})
+
+class BookList(View):
+    template_name = 'catalog/book_list.html'
+    def get(self, request, parent_template=None):
+        return render(request, self.template_name, {'book_list': Book.objects.all()})
+
+class BookCreate(ObjectCreateMixin,View):
+    form_class = BookForm
+    template_name = 'catalog/book_form.html'
+
+class BookUpdate(ObjectUpdateMixin, View):
+    form_class = BookForm
+    template_name = 'catalog/book_update.html'
+    model = Book
+
+class BookDelete(ObjectDeleteMixin,View):
+    model = Book
+    success_url = reverse_lazy(
+        'book_list')
+    template_name = (
+        'catalog/book_confirm_delete.html')
+
 
 def dvd_detail(request, slug):
     dvd = get_object_or_404(
@@ -28,7 +59,6 @@ def dvd_detail(request, slug):
         request,
         'catalog/dvd_detail.html',
         {'dvd': dvd})
-
 
 class DvdList(View):
     template_name = 'catalog/dvd_list.html'
@@ -43,19 +73,9 @@ class DvdUpdate(ObjectUpdateMixin, View):
     form_class = DvdForm
     template_name = 'catalog/dvd_update.html'
     model = Dvd
-class DvdDelete(View):
+class DvdDelete(ObjectDeleteMixin,View):
     model = Dvd
     success_url = reverse_lazy(
-        'catalog_dvd_urls')
+        'dvd_list')
     template_name = (
         'catalog/dvd_confirm_delete.html')
-    def get(self,request,slug):
-        obj = get_object_or_404(self.model, slug__iexact=slug)
-        context = {"dvd": obj}
-        return render(request, self.template_name, context )
-    def post(self, request, slug):
-        obj = get_object_or_404(
-            self.model, slug__iexact=slug)
-        obj.delete()
-        return HttpResponseRedirect(
-            self.success_url)

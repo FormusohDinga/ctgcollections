@@ -4,13 +4,13 @@
 {% block content %}
 <h2></h2>
    <section>
-     <a href="{%url 'dvd_create'%}"> Add Movie
+     <a href="{%url 'book_create'%}"> Add Book
      </a>
-     <h3>Movies</h3>
+     <h3>Books</h3>
      <ul>
-       {% for dvd in dvd_list %}
-         <li><a href="{{dvd.get_absolute_url}}">
-           {{ dvd.name }}
+       {% for book in book_list %}
+         <li><a href="{{book.get_absolute_url}}">
+           {{ book.name }}
          </a></li>
        {% endfor %}
      </ul>

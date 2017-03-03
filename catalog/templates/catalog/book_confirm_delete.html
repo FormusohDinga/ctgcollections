@@ -1,0 +1,23 @@
+{% extends parent_template|default:"catalog/base_catalog.html" %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ book.get_delete_url }}"
+          method="post">
+        {% csrf_token %}
+        <p>
+          Are you sure you want to delete
+          book {{ book.name }}?
+        </p>
+        <a href="{{ book.get_absolute_url }}">
+          Cancel</a>
+        <button type="submit">Delete Book</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

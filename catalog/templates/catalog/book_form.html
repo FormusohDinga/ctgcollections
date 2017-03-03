@@ -1,0 +1,21 @@
+
+{% extends parent_template|default:"catalog/base_catalog.html" %}
+
+{% block title %}
+{{ block.super }} - Create Startup
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{% url 'book_create' %}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+          Add Book </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

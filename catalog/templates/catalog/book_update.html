@@ -1,0 +1,20 @@
+{% extends parent_template|default:"catalog/base_catalog.html" %}
+
+{% block title %}
+{{ block.super }} - {{book.name}}
+{% endblock %}
+
+{% block content %}
+  <div>
+    <div>
+      <form
+          action="{{ book.get_update_url }}"
+          method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">
+          Update Dvd</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

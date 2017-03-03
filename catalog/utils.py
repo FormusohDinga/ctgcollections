@@ -62,9 +62,7 @@ class ObjectDeleteMixin:
 
     def get(self, request, slug):
         obj = get_object_or_404(self.model, slug__iexact=slug)
-        context = { self.model.__name__.lower: obj }
-
-        print(self.model.__name__.lower())
+        context = { self.model.__name__.lower(): obj }
         return render(request, self.template_name, context)
     def post(self, request, slug):
         obj = get_object_or_404(

@@ -1,11 +1,18 @@
 from django.conf.urls import url
 
-from .views import (DvdList, DvdCreate,DvdUpdate,DvdDelete, dvd_detail)
+from .views import ( BookCreate, BookUpdate,
+                    BookDelete,BookList,
+                    book_detail, DvdList,
+                    DvdCreate,DvdUpdate,
+                    DvdDelete, dvd_detail, Catalog)
 
 urlpatterns = [
     url(r'^$',
+        Catalog.as_view(),
+        name='catalog_view'),
+    url(r'^dvd/$',
         DvdList.as_view(),
-        name='catalog_dvd_urls'),
+        name='dvd_list'),
     url(r'^dvd/create/$',
         DvdCreate.as_view(),
         name='dvd_create'),
@@ -18,4 +25,19 @@ urlpatterns = [
     url(r'^dvd/(?P<slug>[\w\-]+)/delete/$',
         DvdDelete.as_view(),
         name='dvd_delete'),
+    url(r'^book/$',
+        BookList.as_view(),
+        name='book_list'),
+    url(r'^book/create/$',
+        BookCreate.as_view(),
+        name='book_create'),
+    url(r'^book/(?P<slug>[\w\-]+)/$',
+        book_detail,
+        name='book_detail'),
+    url(r'^book/(?P<slug>[\w\-]+)/update/$',
+        BookUpdate.as_view(),
+        name='book_update'),
+    url(r'^book/(?P<slug>[\w\-]+)/delete/$',
+        BookDelete.as_view(),
+        name='book_delete'),
         ]
